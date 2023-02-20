@@ -1,10 +1,8 @@
 package com.example.onlineshopapp.model.otherContent
 
-data class Slider(
+data class Content(
     var id: Long?,
-    var image: String?,
-    var title: String?,
-    var subTitle: String?,
-    var link: String?
-)
 
+    var title: String?,
+    var description: String?
+)

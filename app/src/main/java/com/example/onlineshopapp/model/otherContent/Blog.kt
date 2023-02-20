@@ -1,10 +1,12 @@
 package com.example.onlineshopapp.model.otherContent
 
-data class Slider(
+data class Blog(
     var id: Long?,
+
     var image: String?,
     var title: String?,
     var subTitle: String?,
-    var link: String?
+    var description: String?,
+    var visitCount: Int?,
+    var addDate: String?
 )
-

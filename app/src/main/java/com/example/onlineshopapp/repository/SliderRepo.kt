@@ -1,6 +1,6 @@
 package com.example.onlineshopapp.repository
 
-import com.example.onlineshopapp.api.SliderApi
+import com.example.onlineshopapp.api.otherContent.SliderApi
 import com.example.onlineshopapp.model.ServiceResponse
 import com.example.onlineshopapp.model.otherContent.Slider
 import dagger.hilt.android.scopes.ActivityScoped

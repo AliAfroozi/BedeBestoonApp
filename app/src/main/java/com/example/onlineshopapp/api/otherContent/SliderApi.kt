@@ -1,4 +1,4 @@
-package com.example.onlineshopapp.api
+package com.example.onlineshopapp.api.otherContent
 
 import com.example.onlineshopapp.model.ServiceResponse
 import com.example.onlineshopapp.model.otherContent.Slider
