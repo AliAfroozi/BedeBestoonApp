@@ -5,6 +5,8 @@ import com.example.onlineshopapp.api.otherContent.BlogApi
 import com.example.onlineshopapp.api.otherContent.ContentApi
 import com.example.onlineshopapp.api.product.ColorApi
 import com.example.onlineshopapp.api.otherContent.SliderApi
+import com.example.onlineshopapp.api.person.UserApi
+import com.example.onlineshopapp.api.product.ProductApi
 import com.example.onlineshopapp.api.product.ProductCategoryApi
 import dagger.Module
 import dagger.Provides
@@ -63,5 +65,18 @@ object ApiModule {
     fun provideProductCategoryApi(): ProductCategoryApi {
         return provideRetrofit().create(ProductCategoryApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideProductApi(): ProductApi {
+        return provideRetrofit().create(ProductApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserApi(): UserApi {
+        return provideRetrofit().create(UserApi::class.java)
+    }
+
 
 }

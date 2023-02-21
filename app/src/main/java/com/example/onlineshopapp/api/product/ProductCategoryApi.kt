@@ -12,6 +12,6 @@ interface ProductCategoryApi {
     suspend fun getAllProductCategories() : ServiceResponse<ProductCategory>
 
     @GET("/api/productCategory/{id}")
-    suspend fun getBlogById(@Path("id") categoryId : Long) : ServiceResponse<ProductCategory >
+    suspend fun getProductCategoryById(@Path("id") categoryId : Long) : ServiceResponse<ProductCategory >
 
 }
