@@ -3,7 +3,7 @@ package com.example.onlineshopapp.di
 import com.example.onlineshopapp.api.invoice.InvoiceApi
 import com.example.onlineshopapp.api.otherContent.BlogApi
 import com.example.onlineshopapp.api.otherContent.ContentApi
-import com.example.onlineshopapp.api.product.ColorApi
+import com.example.onlineshopapp.api.product.ProductColorApi
 import com.example.onlineshopapp.api.otherContent.SliderApi
 import com.example.onlineshopapp.api.person.UserApi
 import com.example.onlineshopapp.api.product.ProductApi
@@ -44,8 +44,8 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideColorApi(): ColorApi {
-        return provideRetrofit().create(ColorApi::class.java)
+    fun provideColorApi(): ProductColorApi {
+        return provideRetrofit().create(ProductColorApi::class.java)
     }
 
     @Singleton

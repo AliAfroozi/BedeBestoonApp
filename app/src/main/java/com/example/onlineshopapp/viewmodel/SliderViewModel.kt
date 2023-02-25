@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.onlineshopapp.model.ServiceResponse
 import com.example.onlineshopapp.model.otherContent.Slider
-import com.example.onlineshopapp.repository.SliderRepo
+import com.example.onlineshopapp.repository.otherContent.SliderRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

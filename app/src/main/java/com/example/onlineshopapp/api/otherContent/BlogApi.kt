@@ -16,5 +16,5 @@ interface BlogApi {
     suspend fun getBlogById(@Path("id") blogId : Long) : ServiceResponse<Blog>
 
     @GET("/api/blog/{pageIndex}&{pageSize}")
-    suspend fun getPagedBlogs(@Query("pageIndex") pageIndex : Int, @Query("pageSize") pageSize : Int)
+    suspend fun getPagedBlogs(@Query("pageIndex") pageIndex : Int, @Query("pageSize") pageSize : Int) : ServiceResponse<Blog>
 }

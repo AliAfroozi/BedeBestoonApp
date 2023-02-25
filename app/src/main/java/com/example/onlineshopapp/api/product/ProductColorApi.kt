@@ -5,10 +5,10 @@ import com.example.onlineshopapp.model.product.ProductColor
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ColorApi {
+interface ProductColorApi {
     @GET("/api/color")
     suspend fun getAllColors() : ServiceResponse<ProductColor>
 
     @GET("/api/color/{id}")
-    suspend fun getAllColors(@Path("id") colorId : Long) : ServiceResponse<ProductColor>
+    suspend fun getColorById(@Path("id") colorId : Long) : ServiceResponse<ProductColor>
 }
