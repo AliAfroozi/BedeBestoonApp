@@ -1,4 +1,4 @@
-package com.example.onlineshopapp.viewmodel
+package com.example.onlineshopapp.viewmodel.otherContent
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +11,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SliderViewModel @Inject constructor(private val sliderRepo: SliderRepo) : ViewModel() {
-    fun getSliders(onSuccess : (response: ServiceResponse<Slider>) -> Unit ) {
+    fun getSliders(onResponse : (response: ServiceResponse<Slider>) -> Unit ) {
         viewModelScope.launch {
-            onSuccess(sliderRepo.getSliders())
+            onResponse(sliderRepo.getSliders())
+        }
+    }
+
+    fun getSliderById(onResponse: (response: ServiceResponse<Slider>) -> Unit, id: Long) {
+        viewModelScope.launch {
+            onResponse(sliderRepo.getSliderById(id))
         }
     }
 }
