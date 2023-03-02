@@ -9,6 +9,16 @@ import javax.inject.Inject
 
 @ActivityScoped
 class InvoiceRepo @Inject constructor(private val InvoiceApi: InvoiceApi) : BaseRepository() {
+
+
+    suspend fun getInvoiceById(id: Long, token: String): ServiceResponse<Invoice> {
+        return try {
+            InvoiceApi.getInvoiceById(id, prepareToken(token))
+        } catch (e: Exception) {
+            ServiceResponse(status = "EXCEPTION", message = e.message)
+        }
+    }
+
     suspend fun getAllInvoicesByUserId(
         userId: Long,
         pageSize: Int,
@@ -17,14 +27,6 @@ class InvoiceRepo @Inject constructor(private val InvoiceApi: InvoiceApi) : Base
     ): ServiceResponse<Invoice> {
         return try {
             InvoiceApi.getAllInvoiceByUserId(userId, pageSize, pageIndex, prepareToken(token))
-        } catch (e: Exception) {
-            ServiceResponse(status = "EXCEPTION", message = e.message)
-        }
-    }
-
-    suspend fun getInvoiceById(id: Long, token: String): ServiceResponse<Invoice> {
-        return try {
-            InvoiceApi.getInvoiceById(id, prepareToken(token))
         } catch (e: Exception) {
             ServiceResponse(status = "EXCEPTION", message = e.message)
         }

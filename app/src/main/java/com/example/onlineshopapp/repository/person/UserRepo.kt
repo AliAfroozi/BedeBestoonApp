@@ -12,11 +12,11 @@ import javax.inject.Inject
 class UserRepo @Inject constructor(private val UserApi: UserApi) : BaseRepository() {
 
     suspend fun getUserByUsername(
-        token: String,
-        username: String
-    ): ServiceResponse<User> {
+        username: String,
+        token: String
+        ): ServiceResponse<User> {
         return try {
-            UserApi.getUserByUsername(username , prepareToken(token))
+            UserApi.getUserByUsername(username, prepareToken(token))
         } catch (e: Exception) {
             ServiceResponse(status = "EXCEPTION", message = e.message)
         }
@@ -46,9 +46,9 @@ class UserRepo @Inject constructor(private val UserApi: UserApi) : BaseRepositor
         }
     }
 
-    suspend fun update(userVM: UserVM , token: String): ServiceResponse<User> {
+    suspend fun update(userVM: UserVM, token: String): ServiceResponse<User> {
         return try {
-            UserApi.updateUser(userVM , prepareToken(token))
+            UserApi.updateUser(userVM, prepareToken(token))
         } catch (e: Exception) {
             ServiceResponse(status = "EXCEPTION", message = e.message)
         }
