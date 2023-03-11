@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.onlineshopapp"
+        applicationId "com.example.BedeBestoon"
         minSdk 23
         targetSdk 33
         versionCode 1
@@ -83,8 +83,8 @@ dependencies {
     //room
     def room_version = "2.5.0"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
 
 }

@@ -1,0 +1,8 @@
+package com.example.BedeBestoon.model.otherContent
+
+data class Content(
+    var id: Long?,
+
+    var title: String?,
+    var description: String?
+)
