@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.BedeBestoon">
+    package="com.example.bedebestoon">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -13,13 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OnlineShopApp"
+        android:theme="@style/Theme.BedeBestoon"
         tools:targetApi="31">
         <activity
-            android:name="com.example.BedeBestoon.MainActivity"
+            android:name="com.example.bedebestoon.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.OnlineShopApp">
+            android:theme="@style/Theme.BedeBestoon">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
