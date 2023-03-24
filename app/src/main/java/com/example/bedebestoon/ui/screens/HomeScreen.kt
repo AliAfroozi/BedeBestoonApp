@@ -22,6 +22,7 @@ import com.example.bedebestoon.model.otherContent.Slider
 import com.example.bedebestoon.model.product.ProductCategory
 import com.example.bedebestoon.ui.components.SliderListView
 import com.example.bedebestoon.ui.components.products.CategoriesListView
+import com.example.bedebestoon.ui.components.products.ProductsListView
 import com.example.bedebestoon.viewmodel.otherContent.SliderViewModel
 import com.example.bedebestoon.viewmodel.product.ProductCategoryViewModel
 import com.skydoves.landscapist.glide.GlideImage
@@ -32,6 +33,8 @@ fun HomeScreen(navController: NavHostController) {
         SliderListView()
         Spacer(modifier = Modifier.height(15.dp))
         CategoriesListView()
+        Spacer(modifier = Modifier.height(20.dp))
+        ProductsListView()
     }
 }
 
