@@ -16,9 +16,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SliderViewModel @Inject constructor(private val sliderRepo: SliderRepo) : ViewModel() {
     var slidersList = mutableStateOf<List<Slider>>(listOf())
+    var isLoading = mutableStateOf(true)
 
     init {
         getSliders { response ->
+            isLoading.value = false
             if (response.status == "OK"){
                 slidersList.value = response.data!!
             }

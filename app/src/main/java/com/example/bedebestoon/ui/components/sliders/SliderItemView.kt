@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bedebestoon.model.otherContent.Slider
+import com.example.bedebestoon.ui.components.Loading
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -30,13 +31,6 @@ fun SliderItemView(slider: Slider) {
             GlideImage(
                 modifier = Modifier.fillMaxSize(),
                 imageModel = { slider.image },
-                loading = {
-                    Box(modifier = Modifier.matchParentSize()) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                },
                 // shows an error text if fail to load an image.
                 failure = {
                     Text(

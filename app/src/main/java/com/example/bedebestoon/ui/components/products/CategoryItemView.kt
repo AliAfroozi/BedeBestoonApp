@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bedebestoon.model.product.ProductCategory
+import com.example.bedebestoon.ui.components.Loading
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -30,13 +31,6 @@ fun CategoryItemView(productCategory: ProductCategory) {
             GlideImage(
                 modifier = Modifier.fillMaxSize(),
                 imageModel = { productCategory.image },
-                loading = {
-                    Box(modifier = Modifier.matchParentSize()) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                },
                 // shows an error text if fail to load an image.
                 failure = {
                     Text(

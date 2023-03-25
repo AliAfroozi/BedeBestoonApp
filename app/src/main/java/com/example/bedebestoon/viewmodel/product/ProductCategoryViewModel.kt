@@ -17,9 +17,11 @@ class ProductCategoryViewModel @Inject constructor(private val productCategoryRe
     ViewModel() {
 
     var productCategoryList = mutableStateOf<List<ProductCategory>>(listOf())
+    var isLoading = mutableStateOf(true)
 
     init {
         getAllProductCategories {
+            isLoading.value = false
             if (it.status == "OK"){
                 productCategoryList.value = it.data!!
             }
