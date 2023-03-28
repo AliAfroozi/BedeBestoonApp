@@ -20,21 +20,48 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bedebestoon.viewmodel.product.ProductViewModel
 
 
 @Composable
-fun ProductByFilterView() {
+fun ProductByFilterView(productViewModel: ProductViewModel = hiltViewModel()) {
+
     val filters = listOf("All", "New", "Popular")
     var selectedFilter by remember { mutableStateOf(0) }
+
     LazyRow {
         items(filters.size) { index ->
 
             TextButton(
-                onClick = { selectedFilter = index },
+                onClick = {
+                    selectedFilter = index
+                    when (index) {
+                        0 -> productViewModel.getAllProducts {
+                            if (it.status == "OK") {
+                                productViewModel.productList.value = it.data!!
+                            }
+                        }
+                        1 -> {
+                            productViewModel.getNewProducts {
+                                if (it.status == "OK") {
+                                    productViewModel.productList.value = it.data!!
+                                }
+                            }
+                        }
+                        2 -> {
+                            productViewModel.getPopularProducts {
+                                if (it.status == "OK") {
+                                    productViewModel.productList.value = it.data!!
+                                }
+                            }
+                        }
+                    }
+                },
                 modifier = Modifier
                     .padding(5.dp, 0.dp)
                     .width(80.dp)
-                    .selectable(index== selectedFilter , true , null) {},
+                    .selectable(index == selectedFilter, true, null) {},
                 colors = ButtonDefaults.buttonColors(backgroundColor = if (index == selectedFilter) Color.LightGray else Color.Transparent),
                 shape = RoundedCornerShape(20.dp)
             ) {

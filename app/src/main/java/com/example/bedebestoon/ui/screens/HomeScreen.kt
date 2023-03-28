@@ -21,7 +21,7 @@ fun HomeScreen(
 ) {
     var productList by remember { mutableStateOf(productViewModel.productList) }
 
-    LazyColumn(modifier = Modifier.padding(5.dp, 20.dp)) {
+    LazyColumn(modifier = Modifier.padding(5.dp, 5.dp)) {
 
         item {
             SliderListView()
