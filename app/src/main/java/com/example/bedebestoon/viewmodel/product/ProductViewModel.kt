@@ -1,5 +1,6 @@
 package com.example.bedebestoon.viewmodel.product
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bedebestoon.model.ServiceResponse
@@ -11,6 +12,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val productRepo: ProductRepo) : ViewModel() {
+    var productList = mutableStateOf<List<Product>>(listOf())
+
+    init {
+        getAllProducts {
+            if (it.status == "OK"){
+                productList.value = it.data!!
+            }
+        }
+    }
     fun getAllProducts(onResponse : (ServiceResponse<Product>) -> Unit) {
         viewModelScope.launch {
             onResponse(productRepo.getAllProducts())

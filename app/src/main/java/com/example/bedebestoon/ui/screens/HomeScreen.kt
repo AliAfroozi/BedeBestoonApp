@@ -1,25 +1,55 @@
 package com.example.bedebestoon.ui.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.bedebestoon.model.product.Product
+import com.example.bedebestoon.ui.components.products.*
 import com.example.bedebestoon.ui.components.sliders.SliderListView
-import com.example.bedebestoon.ui.components.products.CategoriesListView
-import com.example.bedebestoon.ui.components.products.ProductsListView
+import com.example.bedebestoon.viewmodel.product.ProductViewModel
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
-    Column(modifier = Modifier.padding(5.dp, 20.dp)) {
-        SliderListView()
-        Spacer(modifier = Modifier.height(15.dp))
-        CategoriesListView()
-        Spacer(modifier = Modifier.height(20.dp))
-        ProductsListView()
+fun HomeScreen(
+    navController: NavHostController,
+    productViewModel: ProductViewModel = hiltViewModel()
+) {
+    var productList by remember { mutableStateOf(productViewModel.productList) }
+
+    LazyColumn(modifier = Modifier.padding(5.dp, 20.dp)) {
+
+        item {
+            SliderListView()
+        }
+        item {
+            Spacer(modifier = Modifier.height(15.dp))
+        }
+
+        item {
+            CategoriesListView()
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+
+        productItems(productList)
     }
 }
 
-
+fun LazyListScope.productItems(productList: MutableState<List<Product>>) {
+    item {
+        ProductsListView()
+    }
+    items(productList.value.size) { index ->
+        ProductItemView(productList.value[index])
+        Spacer(modifier = Modifier.height(10.dp))
+    }
+}
 
 
