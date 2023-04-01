@@ -19,7 +19,10 @@ fun SliderListView(sliderViewModel: SliderViewModel = hiltViewModel()) {
     val isLoading by remember { mutableStateOf(sliderViewModel.isLoading) }
 
     if (isLoading.value) {
-        Loading(width = 300.dp, height = 200.dp, 3 , 10.dp)
+        Loading(
+            Modifier
+                .width(300.dp)
+                .height(200.dp), 3, 10.dp)
     } else {
         LazyRow() {
             items(sliderList.value.size, itemContent = { index ->

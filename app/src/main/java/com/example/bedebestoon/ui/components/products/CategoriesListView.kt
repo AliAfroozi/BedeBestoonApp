@@ -1,6 +1,7 @@
 package com.example.bedebestoon.ui.components.products
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -20,7 +21,10 @@ fun CategoriesListView(productCategoryViewModel: ProductCategoryViewModel = hilt
     val isLoading by remember { mutableStateOf(productCategoryViewModel.isLoading) }
 
     if (isLoading.value) {
-        Loading(width = 160.dp, height = 200.dp, 3  , 10.dp)
+        Loading(
+            Modifier
+                .width(160.dp)
+                .height(200.dp), 3, 10.dp)
     } else {
         LazyRow() {
             items(productCategoryList.value.size, itemContent = { index ->

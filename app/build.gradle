@@ -93,6 +93,7 @@ dependencies {
     def glide_version = "2.1.7"
     implementation "com.github.skydoves:landscapist-glide:$glide_version"
 
+    implementation 'androidx.ui:ui-foundation:0.1.0-dev03'
 
 }
 
