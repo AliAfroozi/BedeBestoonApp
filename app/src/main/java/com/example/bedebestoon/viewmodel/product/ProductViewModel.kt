@@ -13,6 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductViewModel @Inject constructor(private val productRepo: ProductRepo) : ViewModel() {
     var productList = mutableStateOf<List<Product>>(listOf())
+    var productInfo = mutableStateOf<List<Product>>(listOf())
 
     init {
         getAllProducts {
