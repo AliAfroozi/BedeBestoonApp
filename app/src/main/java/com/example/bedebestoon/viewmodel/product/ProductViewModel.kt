@@ -16,11 +16,6 @@ class ProductViewModel @Inject constructor(private val productRepo: ProductRepo)
     var productInfo = mutableStateOf<List<Product>>(listOf())
 
     init {
-        getAllProducts {
-            if (it.status == "OK"){
-                productList.value = it.data!!
-            }
-        }
     }
     fun getAllProducts(onResponse : (ServiceResponse<Product>) -> Unit) {
         viewModelScope.launch {
@@ -49,6 +44,12 @@ class ProductViewModel @Inject constructor(private val productRepo: ProductRepo)
     fun getPagedProducts(pageSize : Int , pageIndex: Int , onResponse : (ServiceResponse<Product>) -> Unit) {
         viewModelScope.launch {
             onResponse(productRepo.getPagedProducts(pageIndex , pageSize))
+        }
+    }
+
+    fun getByCategoryId(categoryId : Long, pageSize: Int , pageIndex: Int , onResponse : (ServiceResponse<Product>) -> Unit) {
+        viewModelScope.launch {
+            onResponse(productRepo.getProductsByCategory(categoryId , pageSize , pageIndex))
         }
     }
 

@@ -33,9 +33,8 @@ fun MainScreen() {
         {
             composable("home") {
                 fullScreen = false
-                HomeScreen() {
-                    navController.navigate("product_detail/$it")
-                }
+                HomeScreen(navController)
+
             }
 
             composable(
@@ -47,6 +46,15 @@ fun MainScreen() {
                 ProductDetailScreen(navController, productId)
             }
 
+            composable(
+                "products_screen/{product_category_id}/{title}",
+                arguments = listOf(navArgument("product_category_id") { type = NavType.LongType } , navArgument("title") { type = NavType.StringType })
+            ) {
+                fullScreen = true
+                val productCategory = it.arguments?.getLong("product_category_id")
+                val categoryTitle = it.arguments?.getString("title")
+                ProductsScreen(navController, productCategory , categoryTitle)
+            }
         }
     }
 }

@@ -22,4 +22,7 @@ interface ProductApi {
     @GET("/api/product/popular")
     suspend fun getPopularProducts() : ServiceResponse<Product>
 
+    @GET("/api/product/category/{categoryId}")
+    suspend fun getProductsByCategory(@Path("categoryId") categoryId: Long , @Query("pageIndex") pageIndex : Int , @Query("pageSize") pageSize: Int ) : ServiceResponse<Product>
+
 }

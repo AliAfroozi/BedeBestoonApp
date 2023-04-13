@@ -47,4 +47,12 @@ class ProductRepo @Inject constructor(private val ProductApi: ProductApi) {
             ServiceResponse(status = "EXCEPTION" , message = e.message)
         }
     }
+    suspend fun getProductsByCategory(categoryId: Long , pageSize: Int , pageIndex: Int) : ServiceResponse<Product> {
+        return try {
+            ProductApi.getProductsByCategory(categoryId , pageIndex , pageSize)
+        }catch (e: Exception){
+            ServiceResponse(status = "EXCEPTION" , message = e.message)
+        }
+    }
+
 }
