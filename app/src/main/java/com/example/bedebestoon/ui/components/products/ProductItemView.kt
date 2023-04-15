@@ -23,11 +23,11 @@ import com.example.bedebestoon.model.product.Product
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun ProductItemView(product: Product, goToProductDetailPage: (id: Long) -> Unit) {
+fun ProductItemView(product: Product, navController : NavHostController) {
     Row(modifier = Modifier
         .fillMaxSize()
         .clickable(true) {
-            product.id?.let { goToProductDetailPage(it) }
+            product.id?.let { navController.navigate("product_detail/$it") }
         }
     ) {
         Card(
