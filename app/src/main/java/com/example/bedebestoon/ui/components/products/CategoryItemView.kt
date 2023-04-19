@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.bedebestoon.model.product.ProductCategory
 import com.example.bedebestoon.ui.components.Loading
+import com.example.bedebestoon.utils.ThisApp
 import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -30,6 +31,7 @@ fun CategoryItemView(productCategory: ProductCategory, navController: NavHostCon
             .shadow(8.dp, RoundedCornerShape(30.dp), clip = true),
         shape = RoundedCornerShape(20.dp),
         onClick = {
+            ThisApp.productCategoryId = productCategory.id!!
             navController.navigate("products_screen/${productCategory.id}/${productCategory.title}")
         }
     ) {

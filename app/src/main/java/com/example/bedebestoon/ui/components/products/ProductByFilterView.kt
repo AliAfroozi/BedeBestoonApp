@@ -44,6 +44,7 @@ fun ProductByFilterView(productViewModel: ProductViewModel = hiltViewModel()) {
                         }
                         1 -> {
                             productViewModel.getNewProducts {
+
                                 if (it.status == "OK") {
                                     productViewModel.productList.value = it.data!!
                                 }
