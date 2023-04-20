@@ -5,14 +5,17 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.bedebestoon.MainActivity
+import com.example.bedebestoon.db.viewModels.BasketEntityViewModel
 
 @Composable
-fun MainScreen() {
+fun MainScreen(mainActivity: MainActivity) {
     val navController = rememberNavController()
     val context = LocalContext.current
     var fullScreen by remember {
@@ -43,7 +46,8 @@ fun MainScreen() {
             ) {
                 val productId = it.arguments?.getLong("product_id")
                 fullScreen = true
-                ProductDetailScreen(navController, productId)
+                val basketEntityViewModel = ViewModelProvider(mainActivity)[BasketEntityViewModel::class.java]
+                ProductDetailScreen(navController, productId , basketEntityViewModel)
             }
 
             composable(

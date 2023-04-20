@@ -9,7 +9,7 @@ import com.example.bedebestoon.db.dao.UserEntityDao
 import com.example.bedebestoon.db.models.BasketEntity
 import com.example.bedebestoon.db.models.UserEntity
 
-@Database(entities = [UserEntity::class , BasketEntity::class] , version = 1)
+@Database(entities = [UserEntity::class , BasketEntity::class] , version = 4)
 abstract class BedeBestooonDatabase() : RoomDatabase() {
 
     abstract fun getUserDao() : UserEntityDao

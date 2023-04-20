@@ -5,39 +5,40 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.bedebestoon.db.models.BasketEntity
+import com.example.bedebestoon.db.viewModels.BasketEntityViewModel
 import com.example.bedebestoon.model.product.Product
 import com.example.bedebestoon.ui.components.Loading
 import com.example.bedebestoon.viewmodel.product.ProductViewModel
 import com.skydoves.landscapist.glide.GlideImage
-import kotlin.math.round
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun ProductDetailScreen(
     navController: NavHostController,
     productId: Long?,
+    basketEntityViewModel: BasketEntityViewModel,
     productViewModel: ProductViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -100,13 +101,25 @@ fun ProductDetailScreen(
         }
 
         Box(contentAlignment = Alignment.TopStart) {
-            Row(modifier = Modifier.fillMaxWidth().padding(5.dp , 5.dp) , horizontalArrangement = Arrangement.SpaceBetween ) {
-                IconButton(onClick = {  navController.popBackStack() }) {
-                    Icon(imageVector = Icons.Filled.ArrowBack , contentDescription =  "" , tint =  Color.Black)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp, 5.dp), horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "",
+                        tint = Color.Black
+                    )
                 }
 
-                IconButton(onClick = {  /* ToDo : go to shop cart page */ })  {
-                    Icon(imageVector = Icons.Filled.ShoppingCart , contentDescription =  "" , tint =  Color.Black)
+                IconButton(onClick = {  /* ToDo : go to shop cart page */ }) {
+                    Icon(
+                        imageVector = Icons.Filled.ShoppingCart,
+                        contentDescription = "",
+                        tint = Color.Black
+                    )
                 }
             }
         }
@@ -135,18 +148,24 @@ fun ProductDetailScreen(
             Column {
                 TitleAndPrice(product = productInfo.value.value[0])
                 Spacer(modifier = Modifier.height(15.dp))
-                Sizes(productInfo.value.value[0])
+                val selectedSize = Sizes(productInfo.value.value[0])
                 Spacer(modifier = Modifier.height(15.dp))
-                ColorsRow(productInfo.value.value[0])
+                val selectedColor = ColorsRow(productInfo.value.value[0])
                 Spacer(modifier = Modifier.height(30.dp))
-                AddToCart()
+                AddToCart(
+                    basketEntityViewModel,
+                    productInfo.value.value[0],
+                    selectedSize,
+                    selectedColor
+                )
             }
         }
     }
 }
 
 @Composable
-fun Sizes(product: Product?) {
+fun Sizes(product: Product?): Int {
+
     var selectedSize by remember {
         mutableStateOf(0)
     }
@@ -179,10 +198,11 @@ fun Sizes(product: Product?) {
             }
         }
     }
+    return selectedSize
 }
 
 @Composable
-fun ColorsRow(product: Product?) {
+fun ColorsRow(product: Product?): Int {
     var selectedColor by remember {
         mutableStateOf(0)
     }
@@ -235,7 +255,7 @@ fun ColorsRow(product: Product?) {
             }
         }
     }
-
+    return selectedColor
 }
 
 
@@ -284,17 +304,36 @@ fun TitleAndPrice(product: Product?) {
 }
 
 @Composable
-fun AddToCart() {
+fun AddToCart(
+    basketEntityViewModel: BasketEntityViewModel,
+    product: Product,
+    selectedSize: Int,
+    selectedColor: Int
+) {
+
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            var basketItem = BasketEntity(
+                productId = product.id!!,
+                price = product.price!!,
+                image = product.image!!,
+                title = product.title!!,
+                quantity = 1,
+                colorId = product.colors!![selectedColor].id!!,
+                sizeId = product.sizes!![selectedSize].id!!
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                basketEntityViewModel.addToBasket(basketItem)
+            }
+        },
+        shape = RoundedCornerShape(15.dp),
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = com.example.bedebestoon.ui.theme.AddToCart,
             contentColor = Color.Black
-        ),
-        shape = RoundedCornerShape(20.dp)
+        )
     ) {
         Text(
             text = "Buy Now",
@@ -303,3 +342,4 @@ fun AddToCart() {
         )
     }
 }
+

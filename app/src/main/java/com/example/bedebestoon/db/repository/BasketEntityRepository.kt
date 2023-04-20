@@ -36,7 +36,5 @@ class BasketEntityRepository(context : Context) {
         return basketList
     }
 
-    fun getBasketListSynchronous(): List<BasketEntity> {
-        return basketList
-    }
+
 }
