@@ -62,6 +62,13 @@ fun MainScreen(mainActivity: MainActivity) {
                 val categoryTitle = it.arguments?.getString("title")
                 ProductsScreen(navController, productCategory , categoryTitle)
             }
+
+            composable(
+                "basket",
+            ) {
+                fullScreen = true
+                BasketScreen(basketEntityViewModel  , navController)
+            }
         }
     }
 }
