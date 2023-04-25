@@ -114,12 +114,32 @@ fun ProductDetailScreen(
                     )
                 }
 
-                IconButton(onClick = {  /* ToDo : go to shop cart page */ }) {
-                    Icon(
-                        imageVector = Icons.Filled.ShoppingCart,
-                        contentDescription = "",
-                        tint = Color.Black
-                    )
+                IconButton(onClick = { navController.navigate("basket") }) {
+                    Box(contentAlignment = Alignment.BottomEnd) {
+                        Icon(
+                            imageVector = Icons.Filled.ShoppingCart,
+                            contentDescription = "",
+                            tint = Color.Black
+                        )
+                        if (basketEntityViewModel.basketListLive.value.isNotEmpty()) {
+                            Box() {
+                                Card(
+                                    modifier = Modifier.size(14.dp),
+                                    backgroundColor = Color.Red,
+                                    shape = RoundedCornerShape(30.dp)
+                                ) {
+                                    Text(
+                                        text = "${basketEntityViewModel.basketListLive.value.size}",
+                                        fontSize = 8.sp,
+                                        color = Color.White,
+                                        modifier = Modifier.padding(1.dp),
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -320,7 +340,8 @@ fun AddToCart(
                 title = product.title!!,
                 quantity = 1,
                 colorId = product.colors!![selectedColor].id!!,
-                sizeId = product.sizes!![selectedSize].id!!
+                sizeId = product.sizes!![selectedSize].id!!,
+                colorHex = product.colors!![selectedColor].hexValue!!
             )
             CoroutineScope(Dispatchers.IO).launch {
                 basketEntityViewModel.addToBasket(basketItem)
