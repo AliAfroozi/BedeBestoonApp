@@ -1,6 +1,7 @@
 package com.example.bedebestoon.db.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.example.bedebestoon.db.BedeBestooonDatabase
 import com.example.bedebestoon.db.dao.BasketEntityDao
 import com.example.bedebestoon.db.models.BasketEntity
@@ -9,10 +10,12 @@ class BasketEntityRepository(context : Context) {
 
     private lateinit var basketEntityDao: BasketEntityDao
     private lateinit var basketList: List<BasketEntity>
+    private lateinit var basketListLive: LiveData<List<BasketEntity>>
 
     init {
         val db = BedeBestooonDatabase.getInstance(context)
         basketEntityDao = db!!.getBasketDao()
+        getBasketListLive()
     }
 
     suspend fun insert(basketEntity: BasketEntity) {
@@ -31,9 +34,9 @@ class BasketEntityRepository(context : Context) {
          basketEntityDao.deleteAll()
     }
 
-    suspend fun getBasketList(): List<BasketEntity> {
-        basketList = basketEntityDao.getBasketList()
-        return basketList
+     fun getBasketListLive(): LiveData<List<BasketEntity>> {
+        basketListLive = basketEntityDao.getBasketListLive()
+        return basketListLive
     }
 
 

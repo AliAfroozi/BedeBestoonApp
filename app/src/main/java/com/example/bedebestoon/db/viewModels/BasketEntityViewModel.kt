@@ -1,24 +1,22 @@
 package com.example.bedebestoon.db.viewModels
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.bedebestoon.db.models.BasketEntity
 import com.example.bedebestoon.db.repository.BasketEntityRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class BasketEntityViewModel(application: Application) : AndroidViewModel(application) {
     private var basketRepository: BasketEntityRepository = BasketEntityRepository(application)
-    private lateinit var baskListValue : List<BasketEntity>
+    var basketListLive = mutableStateOf<List<BasketEntity>>(listOf())
 
     init {
-        getBasketList()
+        getBasketListLive()
     }
-
     private fun insert(basketEntity: BasketEntity){
         viewModelScope.launch {
             basketRepository.insert(basketEntity)
@@ -43,16 +41,14 @@ class BasketEntityViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun getBasketList()  {
-        viewModelScope.launch(Dispatchers.IO) {
-            baskListValue = basketRepository.getBasketList()
-        }
+
+     fun getBasketListLive(): LiveData<List<BasketEntity>> {
+             return basketRepository.getBasketListLive()
     }
 
     fun addToBasket(basketItem: BasketEntity) {
-        getBasketList()
-        if (baskListValue.any { it.productId == basketItem.productId && it.colorId == basketItem.colorId && it.sizeId == basketItem.sizeId}) {
-            var oldBasket = baskListValue.first {  it.productId == basketItem.productId && it.colorId == basketItem.colorId && it.sizeId == basketItem.sizeId }
+        if (basketListLive.value.any { it.productId == basketItem.productId && it.colorId == basketItem.colorId && it.sizeId == basketItem.sizeId}) {
+            var oldBasket = basketListLive.value.first {  it.productId == basketItem.productId && it.colorId == basketItem.colorId && it.sizeId == basketItem.sizeId }
             oldBasket.quantity = oldBasket.quantity + 1
             update(oldBasket)
         } else {

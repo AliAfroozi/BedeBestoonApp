@@ -1,5 +1,6 @@
 package com.example.bedebestoon.db.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.bedebestoon.db.models.BasketEntity
 
@@ -16,7 +17,7 @@ interface BasketEntityDao {
     suspend fun delete(basketEntity: BasketEntity)
 
     @Query("Select * From BasketEntity")
-    suspend fun getBasketList() : List<BasketEntity>
+    fun getBasketListLive() : LiveData<List<BasketEntity>>
 
     @Query("Delete From BasketEntity")
     suspend fun deleteAll()

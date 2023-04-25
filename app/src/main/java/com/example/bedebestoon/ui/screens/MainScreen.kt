@@ -3,6 +3,7 @@ package com.example.bedebestoon.ui.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,10 @@ fun MainScreen(mainActivity: MainActivity) {
     var fullScreen by remember {
         mutableStateOf(false)
     }
+    val basketEntityViewModel = ViewModelProvider(mainActivity)[BasketEntityViewModel::class.java]
+    basketEntityViewModel.getBasketListLive().observe(mainActivity) {
+        basketEntityViewModel.basketListLive.value = it
+    }
 
     Scaffold(
         topBar = {
@@ -37,7 +42,6 @@ fun MainScreen(mainActivity: MainActivity) {
             composable("home") {
                 fullScreen = false
                 HomeScreen(navController)
-
             }
 
             composable(
@@ -46,7 +50,6 @@ fun MainScreen(mainActivity: MainActivity) {
             ) {
                 val productId = it.arguments?.getLong("product_id")
                 fullScreen = true
-                val basketEntityViewModel = ViewModelProvider(mainActivity)[BasketEntityViewModel::class.java]
                 ProductDetailScreen(navController, productId , basketEntityViewModel)
             }
 
