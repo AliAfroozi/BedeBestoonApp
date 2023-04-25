@@ -18,6 +18,7 @@ class ProductColorViewModel @Inject constructor(private val productColorRepo: Pr
     }
 
     fun getProductColorById(id : Long , onResponse : (ServiceResponse<ProductColor>) -> Unit) {
+
         viewModelScope.launch {
             onResponse(productColorRepo.getColorById(id))
         }
