@@ -21,8 +21,8 @@ class ProductCategoryViewModel @Inject constructor(private val productCategoryRe
 
     init {
         getAllProductCategories {
-            isLoading.value = false
             if (it.status == "OK"){
+                isLoading.value = false
                 productCategoryList.value = it.data!!
             }
         }

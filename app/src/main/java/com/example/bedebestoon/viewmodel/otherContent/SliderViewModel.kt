@@ -20,8 +20,8 @@ class SliderViewModel @Inject constructor(private val sliderRepo: SliderRepo) : 
 
     init {
         getSliders { response ->
-            isLoading.value = false
             if (response.status == "OK"){
+                isLoading.value = false
                 slidersList.value = response.data!!
             }
         }
