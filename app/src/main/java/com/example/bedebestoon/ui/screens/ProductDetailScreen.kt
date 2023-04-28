@@ -241,7 +241,7 @@ fun ColorsRow(product: Product?): Int {
 
         LazyRow(
         ) {
-            items(product!!.colors!!.size) { index ->
+                items(product!!.colors!!.size) { index ->
                 TextButton(
                     onClick = { selectedColor = index },
                     modifier = Modifier.size(40.dp),
@@ -341,7 +341,8 @@ fun AddToCart(
                 quantity = 1,
                 colorId = product.colors!![selectedColor].id!!,
                 sizeId = product.sizes!![selectedSize].id!!,
-                colorHex = product.colors!![selectedColor].hexValue!!
+                colorHex = product.colors!![selectedColor].hexValue!!,
+                size = product.sizes!![selectedSize].value!!
             )
             CoroutineScope(Dispatchers.IO).launch {
                 basketEntityViewModel.addToBasket(basketItem)

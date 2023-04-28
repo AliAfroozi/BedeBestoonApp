@@ -15,5 +15,6 @@ data class BasketEntity(
     @ColumnInfo(name = "price") val price: String,
     @ColumnInfo(name = "image") val image: String,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "color_hex") val colorHex: String
+    @ColumnInfo(name = "color_hex") val colorHex: String,
+    @ColumnInfo(name = "size") val size: Int
 )
