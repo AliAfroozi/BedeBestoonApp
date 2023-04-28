@@ -8,10 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,11 +25,25 @@ import com.example.bedebestoon.ui.theme.Dark
 @Composable
 fun BasketScreen(
     basketEntityViewModel: BasketEntityViewModel,
+    mainActivity: MainActivity,
     navController: NavHostController
 ) {
+
+    var totalPrice by remember {
+        mutableStateOf<Long>(0)
+    }
+
     val basketList by remember {
         mutableStateOf(basketEntityViewModel.basketListLive)
     }
+
+    basketEntityViewModel.getBasketListLive().observe(mainActivity) {
+        totalPrice = 0
+        basketList.value.forEach {  item ->
+            totalPrice += item.quantity * item.price.toLong()
+        }
+    }
+
 
 
 
@@ -90,7 +101,7 @@ fun BasketScreen(
                         navController
                     )
 
-                    if (index == basketList.value.size -1 ){
+                    if (index == basketList.value.size - 1) {
                         Spacer(modifier = Modifier.height(130.dp))
                     }
                 }
@@ -102,23 +113,37 @@ fun BasketScreen(
         }
 
         if (basketList.value.isNotEmpty()) {
-            Box(contentAlignment = Alignment.BottomCenter , modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Transparent)) {
+            Box(
+                contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier.fillMaxSize()
+            ) {
 
-                Button(onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Dark),
-                    shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier
-                        .padding(25.dp)
-                        .fillMaxWidth()
-                        .height(50.dp)) {
-                    Text(
-                        text = "Complete your purchase",
-                        color = Color.White,
-                        style = MaterialTheme.typography.button,
-                        fontSize = 16.sp
-                    )
+                Card(
+                    shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
+                    backgroundColor = Color.LightGray
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = "Total Price: $totalPrice", fontSize = 16.sp , modifier = Modifier.padding(top = 15.dp))
+
+                        Button(
+                            onClick = { /*TODO*/ },
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Dark),
+                            shape = RoundedCornerShape(15.dp),
+                            modifier = Modifier
+                                .padding(20.dp)
+                                .fillMaxWidth()
+                                .height(45.dp)
+                        ) {
+                            Text(
+                                text = "Complete your purchase",
+                                color = Color.White,
+                                style = MaterialTheme.typography.button,
+                                fontSize = 16.sp
+                            )
+                        }
+
+                    }
+
                 }
 
             }

@@ -67,7 +67,7 @@ fun MainScreen(mainActivity: MainActivity) {
                 "basket",
             ) {
                 fullScreen = true
-                BasketScreen(basketEntityViewModel  , navController)
+                BasketScreen(basketEntityViewModel , mainActivity  , navController)
             }
         }
     }
