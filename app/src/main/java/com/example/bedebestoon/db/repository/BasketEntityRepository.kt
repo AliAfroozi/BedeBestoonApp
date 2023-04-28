@@ -39,5 +39,19 @@ class BasketEntityRepository(context : Context) {
         return basketListLive
     }
 
+     suspend fun incrementQuantity(basketEntity: BasketEntity) {
+        basketEntity.quantity++
+        basketEntityDao.update(basketEntity)
+    }
+
+    suspend fun decrementQuantity(basketEntity: BasketEntity) {
+        if (basketEntity.quantity == 1) {
+            basketEntityDao.delete(basketEntity)
+        } else {
+            basketEntity.quantity--
+            basketEntityDao.update(basketEntity)
+        }
+    }
+
 
 }

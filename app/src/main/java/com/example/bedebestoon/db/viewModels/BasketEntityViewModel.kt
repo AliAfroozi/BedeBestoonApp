@@ -56,4 +56,16 @@ class BasketEntityViewModel(application: Application) : AndroidViewModel(applica
         }
 
     }
+
+    fun incrementQuantity(basketEntity: BasketEntity){
+        viewModelScope.launch {
+            basketRepository.incrementQuantity(basketEntity)
+        }
+    }
+
+    fun decrementQuantity(basketEntity: BasketEntity){
+        viewModelScope.launch {
+            basketRepository.decrementQuantity(basketEntity)
+        }
+    }
 }
